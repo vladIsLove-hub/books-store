@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap');
+
+.preloader{
+    font-family: 'Poppins', sans-serif;
+    color: #92890a;
+    font-size: 30px;
+    transition: 0.2s ease;
+    animation: load 0.4s ease infinite;
+}
+
+@keyframes load{
+    from{
+        color: #92890a;
+    }
+    to{
+        color: #fff;
+    }
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,20 @@
+@mixin linksStylesText ($fontSize: 16px) {
+    font-family:'Poppins', sans-serif;
+        color: #fff;
+        font-size: $fontSize;
+        text-shadow: 0px 0px 10px black;
+        transition: .2s ease;
+}
+
+@mixin linksHoverEffects {
+    outline: none;
+    text-decoration: none;
+    color: #b3a704;
+}
+
+@mixin BooksAndAuthorStyles {
+    width: 250px;
+    height: 250px;
+    background-size: cover;
+    margin-bottom: 40px;
+}

@@ -1,0 +1,52 @@
+@import '../../../styles/mixins';
+
+.main{
+    box-sizing: border-box;
+    padding: 5rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cards{
+    box-sizing: border-box;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    &__item{
+        @include linksStylesText(18px);
+        padding: 60px 20px;
+        display: flex;
+        flex-direction: column;
+        justify-items: center;
+        align-items: center;
+        border-radius: 7px;
+        background-color: #b3a704;
+        box-shadow: 0px 0px 10px black;
+        transition: .2s ease;
+        
+        &:hover{
+            color: #fff;
+            transform: translateY(-10px) rotate(-3deg);
+            background-color: #beb205;
+            box-shadow: 0px 0px 10px #b3a704;
+        }
+        &:nth-of-type(2){
+            &:hover{
+                transform: translateY(-10px) rotate(3deg);
+            }
+        }
+    }
+
+    &__book{
+        background: url('../../../images/book.png') no-repeat;
+        @include BooksAndAuthorStyles;
+    }
+
+    &__author{
+        background: url('../../../images/author.png') no-repeat;
+        @include BooksAndAuthorStyles;
+    }
+}
