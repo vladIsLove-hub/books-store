@@ -1,1 +1,5 @@
-It's BooksStore!
+BooksStore on the React
+
+npm i - install all dependencies
+
+npm run start - running a project in development mode on a local server
