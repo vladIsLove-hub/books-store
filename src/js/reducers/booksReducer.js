@@ -1,8 +1,8 @@
-import { deleteItemFromArray, editBookFromItems, addBook } from "../utils/utils"
+import { deleteItemFromArray, editBookFromItems, addBook, getBookIndexById } from "../utils/utils"
 import { setItemsToLocalStorage } from '../local-storage/local-storage'
 import initialState from "./state"
 
-const booksReducer = (state = initialState, action) => {
+const booksReducer = ( state = initialState, action ) => {
     switch(action.type){
         case 'BOOKS_REQUESTED': 
             return {
@@ -45,7 +45,7 @@ const booksReducer = (state = initialState, action) => {
             }
         case 'BOOK_DELETED':
             const { books } = state
-            const bookIndex = books.findIndex(({ id }) => id === action.payload)
+            const bookIndex = getBookIndexById(books, action.payload)
             const newBooksAfterDeleted = deleteItemFromArray(books, bookIndex)
             setItemsToLocalStorage('books', newBooksAfterDeleted)
             return {

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Formik } from 'formik'
 import { validation, initialValues } from '../../utils/bookValidation'
-import '../book-edit-render/book-edit-render.scss'
 import { HeadTableFields } from './head-table-fields'
 import { connect } from 'react-redux'
 import { bookAdded } from '../../actions/booksActions'
@@ -9,9 +8,9 @@ import { bookAdded } from '../../actions/booksActions'
 const BookAddItem = ({ authors, bookAdded }) => {
     return(
         <Formik
-            initialValues={initialValues}
+            initialValues={ initialValues }
             validateOnBlur
-            onSubmit={ async (values) => {
+            onSubmit={ async ( values ) => {
                 if(values.authorId === 'Choose'){
                     return
                 } else {
@@ -21,7 +20,7 @@ const BookAddItem = ({ authors, bookAdded }) => {
                     values.first_public = ''
                 }
             }}
-            validationSchema={validation}
+            validationSchema={ validation }
         >
             {
                 ({ values, errors, touched, handleChange, handleBlur, isValid, handleSubmit, dirty }) => {
@@ -40,26 +39,28 @@ const BookAddItem = ({ authors, bookAdded }) => {
                                             type="text"
                                             name='title'
                                             required
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            value={values.title}
+                                            onChange={ handleChange }
+                                            onBlur={ handleBlur }
+                                            value={ values.title }
                                             />
-                                        {touched.title && errors.title && <p className="error">{errors.title}</p>}
+                                        { touched.title && errors.title && <p className="error">{errors.title}</p> }
                                     </td>
                                     <td>
                                         <select
                                             id="select"
                                             className="editForm__select"
                                             name="authorId"
-                                            value={values.author}
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
+                                            value={ values.author }
+                                            onChange={ handleChange }
+                                            onBlur={ handleBlur }
                                             >
                                                 <option value="Choose">Choose author...</option>
                                             {   
-                                                authors.map((author, idx) => {
+                                                authors.map(( author, idx ) => {
                                                     return(
-                                                    <option key={idx} value={idx + 1}>{`${author.first_name} ${author.last_name}`}</option>
+                                                    <option key={ idx } value={ idx + 1 }>
+                                                        {`${ author.first_name } ${ author.last_name }`}
+                                                    </option>
                                                     )
                                                 })
                                             }
@@ -72,18 +73,19 @@ const BookAddItem = ({ authors, bookAdded }) => {
                                             type="number"
                                             required
                                             name='first_public'
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            value={values.first_public}
+                                            onChange={ handleChange }
+                                            onBlur={ handleBlur }
+                                            value={ values.first_public }
                                             />
-                                        {touched.first_public && errors.first_public && <p className="error">{errors.first_public}</p>}
+                                        {  touched.first_public && errors.first_public && <p className="error">{errors.first_public}</p> }
                                     </td>
                                     <td>
                                         <button
-                                        type="submit"
-                                        onClick={handleSubmit}
-                                        disabled={isValid && !dirty && touched}
-                                        className="btn btn-success p-2">
+                                          type="submit"
+                                          onClick={ handleSubmit }
+                                          disabled={ isValid && !dirty && touched }
+                                          className="btn btn-success p-2"
+                                          >
                                             Add
                                         </button>
                                     </td>

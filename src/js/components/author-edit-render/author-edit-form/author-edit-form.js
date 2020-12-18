@@ -1,23 +1,23 @@
 import React from 'react'
 import { Formik } from 'formik'
 import { connect } from 'react-redux'
-import { validation, initialValues } from '../../../utils/authorValidation'
+import { validation, getInitialValues } from '../../../utils/authorValidation'
 import { authorEdited } from '../../../actions/authorsActions'
 
-const AuthorEditForm = ({ history, match, authorEdited, books }) => {
+const AuthorEditForm = ({ history, match, authorEdited, books, authors }) => {
+    const { editId } = match.params
     return(
         <Formik
-            initialValues={initialValues}
+            initialValues={getInitialValues(authors, editId)}
             validateOnBlur
             onSubmit={ async (values) => {
-                const { editId } = match.params
                 await authorEdited(values, editId, books)
                 history.push('/authors')
             }}
             validationSchema={validation}
         >
             {
-                ({ values, errors, touched, handleChange, handleBlur, isValid, handleSubmit, dirty }) => {
+                ({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => {
                     return (
                         <form className="editForm">
                             <div className="editForm__item">
@@ -51,7 +51,7 @@ const AuthorEditForm = ({ history, match, authorEdited, books }) => {
                             </div>
                             {touched.last_name && errors.last_name && <p className="error">{errors.last_name}</p>}
                             <div className="row d-flex justify-content-center p-3">
-                                <button type="submit" onClick={handleSubmit} disabled={isValid && !dirty && touched} className="btn btn-success p-2 m-3">Apply</button>
+                                <button type="submit" onClick={handleSubmit} className="btn btn-success p-2 m-3">Apply</button>
                                 <button onClick={() => history.push('/authors')} className="btn btn-danger p-2 m-3">Go back</button>
                             </div>
                         </form>
@@ -63,9 +63,10 @@ const AuthorEditForm = ({ history, match, authorEdited, books }) => {
 }
 
 
-const mapStateToProps = ({ booksState }) => {
+const mapStateToProps = ({ booksState, authorsState }) => {
     return{ 
         books: booksState.books,
+        authors: authorsState.authors
     }
 }
 

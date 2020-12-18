@@ -1,4 +1,4 @@
-export const authorsLoaded = (newAuthors) => {
+export const authorsLoaded = ( newAuthors ) => {
     return {
         type: 'AUTHORS_LOADED',
         payload: newAuthors
@@ -6,20 +6,20 @@ export const authorsLoaded = (newAuthors) => {
 }
 
 export const authorsRequested = () => {
-    return{
+    return {
         type: 'AUTHORS_REQUESTED'
     }
 }
 
-const authorsError = (error) => {
+const authorsError = ( error ) => {
     return{
         type: 'AUTHORS_ERROR',
         payload: error
     }
 }
 
-export const authorEdited = (objValues, editId, books) => {
-    return{
+export const authorEdited = ( objValues, editId, books ) => {
+    return {
         type: 'AUTHOR_EDIT',
         payload: objValues,
         editId,
@@ -27,27 +27,21 @@ export const authorEdited = (objValues, editId, books) => {
     }
 }
 
-export const authorAdded = (objValues) => {
+export const authorAdded = ( objValues ) => {
     return {
         type: 'AUTHOR_ADD',
         objValues
     }
 }
 
-export const clearBooks = () => {
-    return {
-        type: 'CLEAR_BOOKS'
-    }
-}
-
-export const authorDeleted = (bookId) => {
+export const authorDeleted = ( bookId ) => {
     return{
         type: 'AUTHOR_DELETED',
         payload: bookId
     }
 }
 
-export const requestAuthors = (dispatch, booksStoreService) => () => {
+export const requestAuthors = ( dispatch, booksStoreService ) => () => {
     dispatch(authorsRequested()) 
     
     booksStoreService.getBooks()

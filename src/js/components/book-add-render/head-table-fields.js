@@ -13,12 +13,11 @@ export const HeadTableFields = () => {
         <thead>
             <tr>
                 {
-                    tableFields.map((field, idx) => {
-                        return <th key={idx + 1} scope="col">{field}</th>
+                    tableFields.map(( field, idx ) => {
+                        return <th key={ idx + 1 } scope="col">{ field }</th>
                     })
                 }
             </tr>
         </thead>
     )
-    
 }

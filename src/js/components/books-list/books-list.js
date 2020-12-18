@@ -4,7 +4,7 @@ import compose from '../../utils/compose'
 import  BooksListItem  from '../books-list-item/books-list-item'
 import hocBooksstoreService from '../HOC/hoc-booksstore-service'
 import { requestBooks, bookDeleted, booksLoaded } from '../../actions/booksActions'
-import { requestAuthors } from '../../actions/authorsActions'
+import { requestAuthors, authorsLoaded } from '../../actions/authorsActions'
 import { BooksTableHead } from '../books-table-head/books-table-head'
 import { Preloader } from '../preloader/preloader'
 import { ErrorIndicator } from '../error-indicator/error-indicator'
@@ -16,21 +16,21 @@ export const BooksList = ({ books, authors, deleteBook }) => {
     return(
         <React.Fragment>
             <div className="row d-flex justify-content-center">
-                <BookAddItem authors={authors} />
+                <BookAddItem authors={ authors } />
             </div>
-
-            <h1 className="group-title">Books Catalog</h1>
-            
+            <h1 className="group-title">
+                Books Catalog
+            </h1>
             <table className="table table-dark table-hover table-responsive-lg">
                 <BooksTableHead />
                 <tbody>
                     {
-                        books.map((book, idx) => {
+                        books.map(( book, idx ) => {
                             return(
-                                <tr key={idx}>
+                                <tr key={ idx }>
                                     <BooksListItem deleteBook={() => {
                                         deleteBook(book.id)
-                                    }} idx={idx} book={book} />
+                                    }} idx={ idx } book={ book } />
                                 </tr>
                             )
                         })
@@ -50,10 +50,13 @@ class BooksListContainer extends React.Component{
     componentDidMount(){
         const { books, authors } = this.props
         const booksFromLocalStore = getItemsFromLocalStorage('books')
-        const authorsFromLocalStore = getItemsFromLocalStorage('books')
+        const authorsFromLocalStore = getItemsFromLocalStorage('authors')
 
-        if(getItemsFromLocalStorage('books').length > 0){
+        if(booksFromLocalStore.length > 0){
             this.props.booksLoaded(booksFromLocalStore)
+        }
+        if(authorsFromLocalStore.length > 0){
+            this.props.authorsLoaded(authorsFromLocalStore)
         }
         if(books.length === 0 && booksFromLocalStore.length === 0){
             this.props.requestBooks()
@@ -81,8 +84,7 @@ class BooksListContainer extends React.Component{
             return <ErrorIndicator />
         }
 
-        return <BooksList authors={authors} deleteBook={deleteBook} books={books} />
-        
+        return <BooksList authors={ authors } deleteBook={ deleteBook } books={ books } />
     }
 }
 
@@ -95,19 +97,22 @@ const mapStateToProps = ({ booksState, authorsState }) => {
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = ( dispatch, ownProps ) => {
     const { booksStoreService } = ownProps
     return {
         requestBooks: requestBooks(dispatch, booksStoreService),
         requestAuthors: requestAuthors(dispatch, booksStoreService),
-        deleteBook: (id) => {
+        deleteBook: ( id ) => {
             const isValid = confirm('Are you sure you want to delete this book?')
             if(isValid){
                 dispatch(bookDeleted(id))
             }
         },
-        booksLoaded: (newBooks) => {
+        booksLoaded: ( newBooks ) => {
             dispatch(booksLoaded(newBooks))
+        },
+        authorsLoaded: ( newAuthors ) => {
+            dispatch(authorsLoaded(newAuthors))
         }
     }
 }
