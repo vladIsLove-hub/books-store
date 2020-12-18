@@ -1,14 +1,13 @@
-
-export const addBook = (state, authors, objValues) => {
+export const addBook = ( state, authors, objValues ) => {
     const { books } = state
     const { title, authorId, first_public } = objValues
 
     const newBook = {
         id: books.length + 1 ,
         title,
-        author_id: authors[+authorId - 1],
+        author_id: authors[ +authorId - 1 ],
         created_at: getCreatedDate(),
-        first_public: `${first_public}`
+        first_public: `${ first_public }`
     }
 
     return [
@@ -27,15 +26,15 @@ export const deleteItemFromArray = ( array, itemIdx ) => {
 export const editBookFromItems = ( state, authors, objValues, bookEditIdx ) => {
     const { books } = state
     const { title, authorId, first_public } = objValues
-    const book = books.find(({ id }) => id === +bookEditIdx)
+    const book = getBookById(books, bookEditIdx)
 
     const editBook = {
         ...book,
         title,
-        author_id: authors[+authorId - 1],
+        author_id: authors[ +authorId - 1 ],
         first_public
     }    
-    const bookIndex = books.findIndex(({ id }) => id === +bookEditIdx)
+    const bookIndex = getBookIndexById(books, bookEditIdx)
     
     return [
         ...books.slice(0, bookIndex),
@@ -44,10 +43,10 @@ export const editBookFromItems = ( state, authors, objValues, bookEditIdx ) => {
     ]
 }
 
-export const editAuthorFromItems = (state, objValues, editId, books) => {
+export const editAuthorFromItems = ( state, objValues, editId, books ) => {
     const { authors } = state
     const { first_name, last_name } = objValues
-    const author = authors.find(({ id }) => id === +editId)
+    const author = getAuthorById(authors, editId)
     const editAuthor = {
         ...author,
         first_name,
@@ -55,7 +54,7 @@ export const editAuthorFromItems = (state, objValues, editId, books) => {
     }
 
     const booksWithAuthorEdited = [
-        ...books.map((book, idx, arr) => {
+        ...books.map(( book, idx, arr ) => {
             if(book.author_id.first_name === author.first_name){
                 return {
                     ...book,
@@ -66,7 +65,7 @@ export const editAuthorFromItems = (state, objValues, editId, books) => {
         })
     ]
 
-    const authorIndex = authors.findIndex(({ id }) => id === +editId)
+    const authorIndex = getAuthorIndexById(authors, editId)
     return {
         getAuthors: [
             ...authors.slice(0, authorIndex),
@@ -77,7 +76,7 @@ export const editAuthorFromItems = (state, objValues, editId, books) => {
     }
 }
 
-export const addAuthor = (state, newAuthorValues) => {
+export const addAuthor = ( state, newAuthorValues ) => {
     const { authors } = state
     const { first_name, last_name } = newAuthorValues
 
@@ -91,6 +90,22 @@ export const addAuthor = (state, newAuthorValues) => {
         ...authors,
         newAuthor
     ]
+}
+
+export function getAuthorById( authors = [], equalId ) {
+    return authors.find(({ id }) => id === +equalId)
+}
+
+export function getBookById( books = [], equalId ) {
+    return books.find(({ id }) => id === +equalId)
+}
+
+export function getAuthorIndexById( authors = [], equalId ) {
+    return authors.findIndex(({ id }) => id === +equalId)
+}
+
+export function getBookIndexById( books = [], equalId ) {
+    return books.findIndex(({ id }) => id === +equalId)
 }
 
 function getCreatedDate(){

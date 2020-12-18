@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Preloader } from '../preloader/preloader'
-import { requestBooks } from '../../actions/booksActions'
 import compose from '../../utils/compose'
 import hocBooksstoreService from '../HOC/hoc-booksstore-service'
 import './book-edit-render.scss'
 import BookEditForm from './book-edit-form/book-edit-form'
+import { getBookById } from '../../utils/utils'
 
 const BookEditItem = ({ book, history, match, authors }) => {
     
@@ -36,50 +36,27 @@ const BookEditItem = ({ book, history, match, authors }) => {
     )
 }
 
-class BookEditItemContainer extends React.Component{
+const BookEditItemContainer = ({ books, editId, history, match }) => {
+    const book = getBookById(books, editId)
 
-    componentDidMount(){
-        if(this.props.books.length === 0){
-            this.props.requestBooks()
-        }
-    }
+    const [ loading, setLoading ] = useState(true)
+    setTimeout(() => setLoading(false), 400)
 
-    render(){
-        const { books, editId, history, match, authors, loading } = this.props
-        const book = books.find((book) => book.id === Number(editId))
+    if(loading){
+        return <Preloader/>
+    }   
 
-        if(loading){
-            return(
-                <div className="container p-5">
-                    <div className="row d-flex justify-content-center">
-                        <Preloader/>
-                    </div>
-                </div>
-            )
-        }        
-
-        return <BookEditItem book={book} history={history} match={match} authors={authors}  />
-    }
-
+    return <BookEditItem book={book} history={history} match={match} />
 } 
 
-const mapStateToProps = ({booksState, authorsState}) => {
-    return{
+const mapStateToProps = ({ booksState }) => {
+    return {
         books: booksState.books,
-        authors: authorsState.authors,
-        loading: authorsState.loading
-    }
-}
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-    const { booksStoreService } = ownProps
-    return{
-        requestBooks: requestBooks(dispatch, booksStoreService)
     }
 }
 
 export default compose(
     hocBooksstoreService(),
     withRouter,
-    connect(mapStateToProps, mapDispatchToProps)
+    connect(mapStateToProps)
 )(BookEditItemContainer)

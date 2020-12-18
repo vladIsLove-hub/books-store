@@ -3,7 +3,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
-
 import { App } from './components/app/app';
 import store from './store';
 import { BooksStoreServiceProvider } from './components/books-store-context/books-store-context';

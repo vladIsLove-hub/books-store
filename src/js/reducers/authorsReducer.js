@@ -1,5 +1,5 @@
 import initialState from "./state"
-import { editAuthorFromItems, addAuthor, deleteItemFromArray } from "../utils/utils"
+import { editAuthorFromItems, addAuthor, deleteItemFromArray, getAuthorIndexById } from "../utils/utils"
 import { setItemsToLocalStorage } from '../local-storage/local-storage'
 
 
@@ -35,7 +35,6 @@ const authorsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 authors: editedAuthors,
-                // books: editedBooks
             }
         case 'AUTHOR_ADD':
             const { objValues } = action
@@ -47,17 +46,12 @@ const authorsReducer = (state = initialState, action) => {
             }
         case 'AUTHOR_DELETED':
             const { authors } = state
-            const authorIndex = authors.findIndex(({ id }) => id === action.payload)
+            const authorIndex = getAuthorIndexById(authors, action.payload)
             const newAuthorsAfterDeleted = deleteItemFromArray(authors, authorIndex)
             setItemsToLocalStorage('authors', newAuthorsAfterDeleted)
             return {
                 ...state,
                 authors: newAuthorsAfterDeleted
-            }
-        case 'CLEAR_BOOKS':
-            return {
-                ...state,
-                books: []
             }
         default : 
             return state

@@ -1,5 +1,4 @@
 @import '../book-view-render/book-view-render.scss';
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap');
 
 .edit{
     font-family: 'Poppins', sans-serif;
@@ -29,6 +28,9 @@
         flex-wrap: nowrap;
         justify-content: space-between;
         margin-top: 10px;
+        @include media-breakpoint-down(xs){
+            flex-direction: column;
+        }
     }
 
     &__label{
@@ -58,6 +60,9 @@
         border-radius: 5px;
         width: 216px;
         outline: none;
+        @include media-breakpoint-down(xs){
+            width: 100%;
+        }
     }
 }
 

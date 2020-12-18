@@ -15,15 +15,19 @@ const AuthorsList = ({ authors, deleteAuthor }) => {
     return(
         <React.Fragment>
             <AuthorAddItem />
-            <h1 className="group-title">Authors Catalog</h1>
+            <h1 className="group-title">
+                Authors Catalog
+            </h1>
             <table className="table table-dark table-hover table-responsive-md">
                 <AuthorTableHead />
                 <tbody>
                     {
-                        authors.map((author, idx) => {
+                        authors.map(( author, idx ) => {
                             return(
-                                <tr key={author.id}>
-                                    <AuthorsListItem deleteAuthor={() => deleteAuthor(author.id)} idx={idx} author={author} />
+                                <tr key={ author.id }>
+                                    <AuthorsListItem
+                                      deleteAuthor={() => deleteAuthor(author.id)}
+                                      idx={ idx } author={ author } />
                                 </tr>
                             )
                         })
@@ -73,12 +77,11 @@ class AuthorsListContainer extends React.Component {
             return <ErrorIndicator />
         }
 
-        return <AuthorsList deleteAuthor={deleteAuthor} authors={authors} />
-
+        return <AuthorsList deleteAuthor={ deleteAuthor } authors={ authors } />
     }
 }
 
-const mapStateToProps = ({ booksState , authorsState  }) => {
+const mapStateToProps = ({ booksState , authorsState }) => {
     return{
         books: booksState.books,
         authors: authorsState.authors,
@@ -87,18 +90,18 @@ const mapStateToProps = ({ booksState , authorsState  }) => {
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = ( dispatch, ownProps ) => {
     const { booksStoreService } = ownProps
     return{
         requestBooks: requestBooks(dispatch, booksStoreService),
         requestAuthors: requestAuthors(dispatch,booksStoreService),
-        deleteAuthor: (id) => {
+        deleteAuthor: ( id ) => {
             const isValid = confirm('Are you sure you want to delete this author?')
             if(isValid){
                 dispatch(authorDeleted(id))
             }
         },
-        authorsLoaded: (newAuthors) => {
+        authorsLoaded: ( newAuthors ) => {
             dispatch(authorsLoaded(newAuthors))
         }
     }

@@ -68,7 +68,6 @@ module.exports = {
         path: path.resolve(__dirname, 'public'),
         publicPath: '/'
     },
-    devtool: isDev? 'source-map' : '',
     optimization: optimization(),
     devServer: {
         port: 3000,
@@ -87,7 +86,6 @@ module.exports = {
                         options: {
                             hmr: isDev,
                             reloadAll: true,
-                            publicPath: '../'
                         }
                     },
                     'css-loader',
