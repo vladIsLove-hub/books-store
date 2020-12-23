@@ -66,7 +66,7 @@ module.exports = {
     output: {
         filename: 'js/[name].[contenthash:8].js',
         path: path.resolve(__dirname, 'public'),
-        publicPath: '/'
+        publicPath: isDev ? '/' : ''
     },
     optimization: optimization(),
     devServer: {
